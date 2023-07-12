@@ -1,0 +1,38 @@
+{
+	"name": "@404-software/ajex-shipping",
+	"version": "1.0.1",
+	"author": {
+		"name": "404 Software",
+		"email": "hello@404-software.com",
+		"url": "https://404-software.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/404-Software/ajex-shipping.git"
+	},
+	"main": "lib/index.js",
+	"scripts": {
+		"dev": "tsx watch src/index.ts",
+		"build": "tsc",
+		"test": "jest --config jestconfig.json"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"axios": "^1.4.0"
+	},
+	"devDependencies": {
+		"@404-software/eslint-config": "^1.0.17",
+		"@types/jest": "^29.5.3",
+		"@types/node": "^20.4.1",
+		"dotenv": "^16.3.1",
+		"eslint": "^8.44.0",
+		"jest": "^29.6.1",
+		"prettier": "^3.0.0",
+		"ts-jest": "^29.1.1",
+		"tsx": "^3.12.7",
+		"typescript": "^5.1.6"
+	},
+	"eslintConfig": {
+		"extends": "@404-software/eslint-config"
+	}
+}
