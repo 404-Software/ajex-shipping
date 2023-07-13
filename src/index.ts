@@ -4,8 +4,7 @@ const BASE_URL = process.env.BASE_URL || 'https://apps-sit.aj-ex.com/order-manag
 const USERNAME = process.env.USERNAME
 const PASSWORD = process.env.PASSWORD
 
-if (!USERNAME || !PASSWORD)
-	throw new Error('Missing environment variables: USERNAME, PASSWORD')
+if (!USERNAME || !PASSWORD) throw new Error('Missing environment variables: USERNAME, PASSWORD')
 
 const client = axios.create({ baseURL: BASE_URL })
 
@@ -108,9 +107,7 @@ interface CreateOrderResponse {
 
 interface AdditionalInfo {}
 
-const createOrder = async (
-	input: CreateOrderInput,
-): Promise<CreateOrderResponse> => {
+const createOrder = async (input: CreateOrderInput): Promise<CreateOrderResponse> => {
 	const { accessToken } = await login()
 
 	const { data } = await client.post('/v2/order', input, {
@@ -119,7 +116,6 @@ const createOrder = async (
 
 	return data
 }
-
 
 interface TrackOrderResponse {
 	responseCode: string
@@ -156,9 +152,7 @@ interface OrderTrackingHistory {
 	cityName?: string
 }
 
-const trackOrder = async (
-	waybillNumber: string,
-): Promise<TrackOrderResponse> => {
+const trackOrder = async (waybillNumber: string): Promise<TrackOrderResponse> => {
 	const { accessToken } = await login()
 
 	const { data } = await client.get(`/v1/order-tracking/${waybillNumber}`, {
@@ -168,10 +162,28 @@ const trackOrder = async (
 	return data
 }
 
+export interface CancelOrderResponse {
+  responseCode: string
+  responseMessage: string
+}
+
+const cancelOrder = async (waybillNumber: string): Promise<CancelOrderResponse> => {
+	const { accessToken } = await login()
+
+	const { data } = await client.post(
+		`/v1/cancel-order`,
+		{ waybillNumber },
+		{ headers: { authorization: `Bearer ${accessToken}` } },
+	)
+
+	return data
+}
+
 const ajex = {
 	login,
 	createOrder,
 	trackOrder,
+  cancelOrder,
 }
 
 export default ajex
