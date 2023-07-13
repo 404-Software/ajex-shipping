@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-const BASE_URL = process.env.BASE_URL || 'https://apps-sit.aj-ex.com/order-management/api'
-const USERNAME = process.env.USERNAME
-const PASSWORD = process.env.PASSWORD
+const BASE_URL = process.env.AJEX_BASE_URL || 'https://apps-sit.aj-ex.com/order-management/api'
+const USERNAME = process.env.AJEX_USERNAME
+const PASSWORD = process.env.AJEX_PASSWORD
 
 if (!USERNAME || !PASSWORD) throw new Error('Missing environment variables: USERNAME, PASSWORD')
 

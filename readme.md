@@ -9,7 +9,7 @@ This package provides helper functions to integrate with aj-ex shipping
 1- you can set the following environment variables:
 
 ```shell
-BASE_URL (Optional)
-USERNAME (Required)
-PASSWORD (Required)
+AJEX_BASE_URL (Optional)
+AJEX_USERNAME (Required)
+AJEX_PASSWORD (Required)
 ```
