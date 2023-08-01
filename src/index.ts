@@ -1,12 +1,14 @@
 import axios from 'axios'
+import 'dotenv/config'
 
-const BASE_URL = process.env.AJEX_BASE_URL || 'https://apps-sit.aj-ex.com/order-management/api'
+const ORDER_MANAGEMENT_BASE_URL = 'https://apps-sit.aj-ex.com/order-management/api'
+const AUTH_BASE_URL = 'https://apps-sit.aj-ex.com/authentication-service/api'
 const USERNAME = process.env.AJEX_USERNAME
 const PASSWORD = process.env.AJEX_PASSWORD
 
 if (!USERNAME || !PASSWORD) throw new Error('Missing environment variables: USERNAME, PASSWORD')
 
-const client = axios.create({ baseURL: BASE_URL })
+const client = axios.create({ baseURL: ORDER_MANAGEMENT_BASE_URL })
 
 export interface LoginResponse {
 	accessToken: string
@@ -14,16 +16,22 @@ export interface LoginResponse {
 }
 
 const login = async (): Promise<LoginResponse> => {
-	const { data } = await client.post('/auth/login', {
-		username: USERNAME,
-		password: PASSWORD,
-	})
+	const { data } = await client.post(
+		'/auth/login',
+		{
+			username: USERNAME,
+			password: PASSWORD,
+		},
+		{
+			baseURL: AUTH_BASE_URL,
+		},
+	)
 
 	return data
 }
 
 export interface CreateOrderInput {
-	orderID: string
+	orderId: string
 	orderTime: string
 	productCode: string
 	expressType: string
@@ -163,8 +171,8 @@ const trackOrder = async (waybillNumber: string): Promise<TrackOrderResponse> =>
 }
 
 export interface CancelOrderResponse {
-  responseCode: string
-  responseMessage: string
+	responseCode: string
+	responseMessage: string
 }
 
 const cancelOrder = async (waybillNumber: string): Promise<CancelOrderResponse> => {
@@ -183,7 +191,7 @@ const ajex = {
 	login,
 	createOrder,
 	trackOrder,
-  cancelOrder,
+	cancelOrder,
 }
 
 export default ajex
