@@ -1,8 +1,10 @@
 import axios from 'axios'
 import 'dotenv/config'
 
-const ORDER_MANAGEMENT_BASE_URL = 'https://apps-sit.aj-ex.com/order-management/api'
-const AUTH_BASE_URL = 'https://apps-sit.aj-ex.com/authentication-service/api'
+const TEST_MODE = process.env.AJEX_TEST_MODE === 'true'
+const BASE_URL = TEST_MODE ? 'https://apps-sit.aj-ex.com' : 'https://apps.aj-ex.com'
+const ORDER_MANAGEMENT_BASE_URL = `${BASE_URL}/order-management/api`
+const AUTH_BASE_URL = `${BASE_URL}/authentication-service/api`
 const USERNAME = process.env.AJEX_USERNAME
 const PASSWORD = process.env.AJEX_PASSWORD
 
@@ -16,14 +18,18 @@ export interface LoginResponse {
 }
 
 const login = async (): Promise<LoginResponse> => {
-	const { data } = await client.post(
-		'/auth/login',
+
+  console.log({
+    baseURL: AUTH_BASE_URL,
+    username: USERNAME,
+    password: PASSWORD,
+  });
+  
+	const { data } = await axios.post(
+		AUTH_BASE_URL + '/auth/login',
 		{
 			username: USERNAME,
 			password: PASSWORD,
-		},
-		{
-			baseURL: AUTH_BASE_URL,
 		},
 	)
 

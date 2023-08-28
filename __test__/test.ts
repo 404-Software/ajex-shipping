@@ -7,9 +7,9 @@ describe('createSession', () => {
 		const shipment = await ajex.createOrder({
 			customerAccount: process.env.AJEX_CUSTOMER_ACCOUNT!,
 			declaredCurrency: 'BHD',
-			expressType: 'DOMESTIC E-COMMERCE EXPRESS',
-			productCode: 'SE0123',
-			orderId: Math.random().toString(),
+			expressType: 'AJEX IRX for BUH -> KSA',
+			productCode: 'AJEX IRX for BUH -> KSA',
+			orderId: '82',
 			orderTime: new Date().toISOString(),
 			parcels: [
 				{
@@ -17,8 +17,11 @@ describe('createSession', () => {
 					weight: 1,
 					cargoInfo: [
 						{
+              hsCode: 'M-03',
+              countryOfOrigin: 'Bahrain',
 							count: 1,
-							name: 'test',
+							name: 'M-03',
+							totalValue: 75,
 						},
 					],
 				},
@@ -26,34 +29,34 @@ describe('createSession', () => {
 			parcelTotalWeight: 1,
 			paymentMethod: 'SENDER_INSTALLMENT',
 			pickupMethod: 'PICKUP',
-			receiverInfo: {
-        name: 'John Doe',
-				phone: '12345678',
-				contactType: 'INDIVIDUAL',
-				addressType: 'FREE_TEXT',
-				country: 'Bahrain',
-        countryCode: 'BH',
-				city: 'Manama',
-				detailedAddress: 'Manama',
-			},
 			senderInfo: {
-				name: 'John Doe',
-				phone: '12345678',
+				name: 'Mavi',
+				phone: '97332226101',
 				contactType: 'INDIVIDUAL',
 				addressType: 'FREE_TEXT',
 				country: 'Bahrain',
-        countryCode: 'BH',
-				city: 'Manama',
-				detailedAddress: 'Manama',
+				countryCode: 'BH',
+				province: 'Capital',
+				city: 'Abu Asheera',
+				cityCode: 'BH',
+				detailedAddress: 'Building 923 Road 3219 Block 332 Floor 2 Apartment 22',
 			},
-			totalDeclaredValue: 100,
-		})
+			receiverInfo: {
+				name: 'غاده علي',
+				phone: '966542846138',
+				email: 'placehoder@placehoder.com',
+				contactType: 'INDIVIDUAL',
+				addressType: 'FREE_TEXT',
+				country: 'SAUDI ARABIA',
+				countryCode: 'SA',
+				detailedAddress: 'Riyadh ظهرة لبن فله 3852 الدور الارضي',
+			},
+			totalDeclaredValue: 75,
+		}).then((res) => console.log(res)).catch((err) => console.log(err))
 
 		console.log(shipment)
+
 
 		expect(typeof shipment).toBe('string')
 	})
 })
-
-
-// AJS000000011853
